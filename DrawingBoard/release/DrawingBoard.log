@@ -1,0 +1,15 @@
+﻿  Generate moc_predefs.h
+  DrawingBoard.cpp
+  main.cpp
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (编译源文件 main.cpp)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 (编译源文件 DrawingBoard.cpp)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(20,37): error C2001: 常量中有换行符
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(21,5): error C2146: 语法错误: 缺少“)”(在标识符“m_lineButton”的前面)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(21,5): error C2146: 语法错误: 缺少“;”(在标识符“m_lineButton”的前面)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(24,40): error C2001: 常量中有换行符
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(25,5): error C2146: 语法错误: 缺少“)”(在标识符“m_rotateRightButton”的前面)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(25,5): error C2146: 语法错误: 缺少“;”(在标识符“m_rotateRightButton”的前面)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(25,41): error C2001: 常量中有换行符
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(28,5): error C2146: 语法错误: 缺少“)”(在标识符“m_RectangleButton”的前面)
+D:\Qt\QtdrawingBorad\DrawingBoard\DrawingBoard.cpp(28,5): error C2146: 语法错误: 缺少“;”(在标识符“m_RectangleButton”的前面)
