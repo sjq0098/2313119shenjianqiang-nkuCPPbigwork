@@ -10,5 +10,12 @@
         <file>recourse/icon/triangle.png</file>
         <file>recourse/icon/note.png</file>
         <file>recourse/icon/note1.png</file>
+        <file>recourse/icon/clear-all.png</file>
+        <file>recourse/icon/keep.png</file>
+        <file>recourse/icon/keepas.png</file>
+        <file>recourse/icon/open.png</file>
+        <file>recourse/icon/eraser.png</file>
+        <file>recourse/icon/pencil.png</file>
+        <file>recourse/icon/none.jpg</file>
     </qresource>
 </RCC>

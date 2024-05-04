@@ -1,37 +1,66 @@
 #include<DrawWidget.h>
 
-DrawWidget::DrawWidget(QWidget*parent):QOpenGLWidget(parent){
+DrawWidget::DrawWidget(QWidget*parent):QWidget(parent){
+
+
+    m_openButton.setParent(this);
+    m_openButton.setText(QString("打开"));
+    m_openButton.setIcon(QIcon(QString(":/icon/recourse/icon/open.png")));
+    m_openButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_openButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+
+    m_keepButton.setParent(this);
+    m_keepButton.setText(QString("保存"));
+    m_keepButton.setIcon(QIcon(QString(":/icon/recourse/icon/keep.png")));
+    m_keepButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_keepButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
     m_pSystemData=SystemData::GetSystemData();
 
     m_bLBtnClicked=false;
     m_Shapetype=ShapeType::Shape_Unknow;
     m_RotateType=Rotatetype::Rotate_0;
-    m_BlackPen.setColor(QColor(0,0,0));
+    m_isdraw=0;
 
     m_NullBrush.setStyle(Qt::BrushStyle::NoBrush);
-    m_WhiteBrush.setColor(QColor(255,255,255));
-    m_WhiteBrush.setStyle(Qt::BrushStyle::SolidPattern);
+    m_BlackPen.setColor(QColor(0,0,0));
+    m_BlackPen.setWidth(5);
+
+
+
+
 
     m_TextFont.setFamily(QString::fromUtf8("楷体"));
     m_TextFont.setPixelSize(30);
     m_ContentEdit.setParent(this);
     m_ContentEdit.hide();
+    _openflag=0;
+
    QObject::connect(&m_ContentEdit,&TextcontentEdit::Signal_GetContent,this,&DrawWidget::fn_Recv_ContentEdit_GetContent,Qt::DirectConnection);
+   QObject::connect(&m_openButton, &QToolButton::clicked, this, &DrawWidget::OpenPic, Qt::DirectConnection);
+   QObject::connect(&m_keepButton, &QToolButton::clicked, this, &DrawWidget::SavePic, Qt::DirectConnection);
+
 }
 DrawWidget::~DrawWidget(){
 
-}
+};
 void DrawWidget::paintEvent(QPaintEvent *event){
 
-    QOpenGLWidget::paintEvent(event);
-    QPainter painter(this);
+    if(_openflag == 0)//不是打开图片的，每一次新建一个空白的画布
+    {
+
+        _pixmap = QPixmap(size());//新建pixmap
+        _pixmap.fill(Qt::white);//背景色填充为白色
+    }
+
+    QPixmap pix = _pixmap;//以_pixmap作为画布
+    QPainter painter(&pix);//将_pixmap作为画布
+    QPainter pw(&pix);
+    pw.setPen(m_WhitePen);
     painter.setPen(m_BlackPen);
     painter.setFont(m_TextFont);
     painter.setBrush(m_NullBrush);
-    painter.setBrush(m_WhiteBrush);
-    painter.drawRect(rect());
-
-
 
     switch (m_RotateType) {
     case(Rotatetype::Rotate_90):{
@@ -54,22 +83,24 @@ void DrawWidget::paintEvent(QPaintEvent *event){
         break;
     }
     }
-
     int iSize=m_pSystemData->m_ShapeVec.size();
     for(int i=0;i<iSize;i++){
         ShapeData* pShape=m_pSystemData->m_ShapeVec.at(i);
         switch (pShape->GetShapeType()) {
         case ShapeType::Shape_Rectangle: {
+
             RectangleData* pRectangle=static_cast<RectangleData *>(pShape);
             painter.drawRect(QRect(pRectangle->GetStartPosX(),pRectangle->GetStartPosY(),pRectangle->GetWidth(),pRectangle->GetHeight()));
-            break;//shift修正将在2.0版本写出
+            break;
             }
         case ShapeType::Shape_Ellipse:{
+
             EllipseData* pEllipse=static_cast< EllipseData*>(pShape);
             painter.drawEllipse(QRectF(pEllipse->GetStartPosX(),pEllipse->GetStartPosY(),pEllipse->GetRadiusW(),pEllipse->GetRadiusH()));
             break;
             }
         case ShapeType::Shape_Triangle:{
+
              TriangleData* pTriangle=static_cast< TriangleData*>(pShape);
 
             QPoint point1(pTriangle->GetStartPosX(),pTriangle->GetStartPosY());
@@ -81,34 +112,45 @@ void DrawWidget::paintEvent(QPaintEvent *event){
             break;
             }
         case ShapeType::Shape_Line:{
+
             LineData* pLineData=static_cast< LineData*>(pShape);
            QPoint point1(pLineData->GetStartPosX(),pLineData->GetStartPosY());
            QPoint point2(pLineData->GetEndPosX(),pLineData->GetEndPosY());
+
            painter.drawLine(point1,point2);
            break;
             }
         case ShapeType::Shape_Text:{
          Textdata* pTextData=static_cast<Textdata*>(pShape);
+
          painter.drawText(QPointF(pTextData->GetStartPosX(),pTextData->GetStartPosY()),pTextData->GetQstr_content());
          break;
          }
-        default:{};
+        case ShapeType::Shape_Pencil:{
+        PencilData *pPencil=static_cast< PencilData*>(pShape);
+
+        painter.drawPath(pPencil->Getdrawpath());
+        break;
+        }
+
+        default:{break;};
         }
     //进行数据渲染、绘画
     }
-
-
     if(m_bLBtnClicked){
         switch (m_Shapetype) {
         case ShapeType::Shape_Rectangle: {
+
             painter.drawRect(QRectF(m_ClickedPoint,m_MovePoint));
             break;
             }
         case ShapeType::Shape_Ellipse:{
+
             painter.drawEllipse(QRectF(m_ClickedPoint,m_MovePoint));
             break;
             }
         case ShapeType::Shape_Triangle:{
+             painter.setPen(m_BlackPen);
             double iX1=m_ClickedPoint.x()<m_MovePoint.x()?m_ClickedPoint.x():m_MovePoint.x();
             double iY1=m_ClickedPoint.y()>m_MovePoint.y()?m_ClickedPoint.y():m_MovePoint.y();
             QPoint dis=m_MovePoint-m_ClickedPoint;
@@ -122,6 +164,7 @@ void DrawWidget::paintEvent(QPaintEvent *event){
             break;
             }
         case ShapeType::Shape_Line:{
+
             double iX1=m_ClickedPoint.x();
             double iY1=m_ClickedPoint.y();
             double iX2=m_MovePoint.x();
@@ -135,14 +178,21 @@ void DrawWidget::paintEvent(QPaintEvent *event){
 
             break;
         }
-        default:{};
+        case ShapeType::Shape_Pencil:{
+        painter.drawPath(drawingPath1);
+        break;
         }
+        default:{break;};
+        }
+
     }
-
-
+    QPainter painter1(this);
+    painter1.drawPixmap(0,0, pix);//将pixmap画到窗体
 }
 void DrawWidget::resizeEvent(QResizeEvent *event){
-    QOpenGLWidget::resizeEvent(event);
+     m_openButton.setGeometry(width()-ICON_SIZE,0,ICON_SIZE,ICON_SIZE);
+     m_keepButton.setGeometry(width()-2*ICON_SIZE,0,ICON_SIZE,ICON_SIZE);
+    QWidget::resizeEvent(event);
     //
 }
 
@@ -153,21 +203,24 @@ void DrawWidget:: mousePressEvent(QMouseEvent *event){
         m_bLBtnClicked=true;
         m_ClickedPoint=event->pos();
         m_MovePoint=m_ClickedPoint;
+        if(m_isdraw){
+            drawingPath1.moveTo(event->pos());
+        }
+
     }
-    QOpenGLWidget::mousePressEvent(event);
+    QWidget::mousePressEvent(event);
 } ;
 
 
 void DrawWidget:: mouseReleaseEvent(QMouseEvent*event){
-    QOpenGLWidget::mouseReleaseEvent(event);
+    QWidget::mouseReleaseEvent(event);
      if(event->button()==Qt::MouseButton::LeftButton){
          m_bLBtnClicked=false;
          m_MovePoint=event->pos();
-         switch(m_Shapetype){
+        switch(m_Shapetype){
          case ShapeType::Shape_Rectangle: {
              double iX1=m_ClickedPoint.x()<m_MovePoint.x()?m_ClickedPoint.x():m_MovePoint.x();
              double iY1=m_ClickedPoint.y()<m_MovePoint.y()?m_ClickedPoint.y():m_MovePoint.y();
-
 
              QPoint dis=m_MovePoint-m_ClickedPoint;
              RectangleData* pRectangle= new RectangleData(double(iX1),double(iY1),qAbs(double(dis.x())),qAbs(double(dis.y())));
@@ -218,20 +271,28 @@ void DrawWidget:: mouseReleaseEvent(QMouseEvent*event){
              else{
                  m_ContentEdit.hide();
              }
-             break;
-            }
-         default:{};
+         }
+        case ShapeType::Shape_Pencil:{
+            PencilData* pPencilData= new PencilData(drawingPath1);
+            m_pSystemData->m_ShapeVec.push_back(pPencilData);
+            update();
+        }
+         default:{break;};
+        }
 
-     }
-};
+    }
 
 }
 
 void DrawWidget:: mouseMoveEvent(QMouseEvent*event){
     if(m_bLBtnClicked){
         m_MovePoint=event->pos();
-        update();
+        if(m_isdraw){
+            drawingPath1.lineTo(event->pos());
+        }
     }
+    update();
+
 };
 
 
@@ -242,6 +303,8 @@ int DrawWidget::fn_Recv_ContentEdit_GetContent(const QString &qstrContent){
     update();
     return NORMAL_RETURN;
 }
+
+
 int DrawWidget:: RotateLeft(){
     switch (m_RotateType) {
     case(Rotatetype::Rotate_90):{
@@ -291,3 +354,36 @@ int DrawWidget::RotateRight(){
     return NORMAL_RETURN;
 
 }
+int DrawWidget::SavePic(){
+    //弹出文件保存对话框
+    QString fileName = QFileDialog::getSaveFileName(this, tr("保存"), "new.jpg", "Image (*.jpg *.png *.bmp)");
+
+    if (fileName.length() > 0)
+    {
+        m_ContentEdit.hide();//防止文本输入框显示时，将文本框保存到图片
+        QPixmap pixmap(size());//新建窗体大小的pixmap
+        QPainter painter(&pixmap);//将pixmap作为画布
+        painter.fillRect(QRect(0, 0, size().width(), size().height()), Qt::white);//设置绘画区域、画布颜色
+        this->render(&painter);//将窗体渲染到painter，再由painter画到画布
+        pixmap.copy(QRect(0,30,size().width(),size().height()-30)).save(fileName);//不包含工具栏
+    }
+    return NORMAL_RETURN;
+}
+//保存图片
+
+
+int DrawWidget::OpenPic(){
+    //弹出文件打开对话框
+    QString picPath = QFileDialog::getOpenFileName(this,tr("打开"),"","Image Files(*.jpg *.png)");
+    if(!picPath.isEmpty())//用户选择了文件
+    {
+        QPixmap pix;
+        pix.load(picPath);//加载图片
+        QPainter p(&_pixmap);
+        p.drawPixmap(0,0,pix);//添加工具栏的空间
+        _openflag = 1;//设置文件打开标志
+        update();//触发窗体重绘，将图片画到窗体
+    }
+    return NORMAL_RETURN;
+}//打开图片
+

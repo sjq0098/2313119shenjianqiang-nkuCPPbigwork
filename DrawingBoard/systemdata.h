@@ -19,7 +19,7 @@ private:
     SystemData();
     ~SystemData();
     static SystemData g_SystemData;
-    QVector<ShapeData*>m_ShapeVec;//图形对象地址容器
+    QVector<ShapeData*> m_ShapeVec;//图形对象地址容器
 
 };
 

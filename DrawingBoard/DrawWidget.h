@@ -11,10 +11,19 @@
 #include"TriangleData.h"
 #include"linedata.h"
 #include"textdata.h"
+#include"pencildata.h"
+
+
+
 
 #include"QPainter"
+#include"QMenu"
 #include<QMouseEvent>
-#include<QOpenGLWidget>
+#include<QPixmap>
+#include<QToolButton>
+#include <QFileDialog>
+#include"QVector"
+
 enum  class Rotatetype//旋转类型（角度）
 {
     Rotate_0=0,
@@ -24,10 +33,11 @@ enum  class Rotatetype//旋转类型（角度）
 
 };
 
-class DrawWidget: public QOpenGLWidget{
+class DrawWidget: public QWidget{
     Q_OBJECT
 public:
     DrawWidget(QWidget*parent=NULL);
+
     ~DrawWidget();
 
 
@@ -38,12 +48,20 @@ public:
     void  mouseReleaseEvent(QMouseEvent*event)override;
 
     inline void SetShapeType(const ShapeType &shapeType){m_Shapetype=shapeType;}
-
+    int eraser(QPoint,int size);
 
     int RotateLeft();
     int RotateRight();
+
+     QToolButton m_openButton;
+     QToolButton m_keepButton;
+
+    bool m_isdraw;
+    bool m_iseraser;
 protected:
     int fn_Recv_ContentEdit_GetContent(const QString &qstrContent);
+    int SavePic();//保存图片
+    int OpenPic();//打开图片
 
 private:
     SystemData*m_pSystemData;
@@ -63,8 +81,18 @@ private:
     QBrush m_NullBrush;//空画刷
     QBrush m_WhiteBrush;//白画刷
     QPen m_BlackPen;//黑画笔
+    QPen m_WhitePen;//白画笔
     QFont m_TextFont;//文字字体
     TextcontentEdit m_ContentEdit;//文本编辑
+
+
+
+    int _openflag;//打开图片
+    QPixmap _pixmap;//画布图片
+    QPainterPath drawingPath1;
+
+
+
 };
 
 #endif // DRAWWIDGET_H

@@ -22,6 +22,7 @@ SOURCES += \
     ellipsedata.cpp \
     linedata.cpp \
     main.cpp \
+    pencildata.cpp \
     systemdata.cpp \
     textcontentedit.cpp \
     textdata.cpp
@@ -33,6 +34,7 @@ HEADERS += \
     TriangleData.h \
     ellipsedata.h \
     linedata.h \
+    pencildata.h \
     shapedata.h \
     sizestandard.h \
     systemdata.h \

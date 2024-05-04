@@ -1,0 +1,15 @@
+debug/DrawWidget.o
+debug/DrawingBoard.o
+debug/RectangleData.o
+debug/ShapeData.o
+debug/TriangleData.o
+debug/ellipsedata.o
+debug/linedata.o
+debug/main.o
+debug/systemdata.o
+debug/textcontentedit.o
+debug/textdata.o
+debug/qrc_resource.o
+debug/moc_DrawWidget.o
+debug/moc_DrawingBoard.o
+debug/moc_textcontentedit.o

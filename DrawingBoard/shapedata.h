@@ -10,7 +10,7 @@ enum class ShapeType
     Shape_Triangle=3,//三角形
     Shape_Line=4,//直线
     Shape_Text=5,//文本
-
+    Shape_Pencil=6,
 };
 
 
@@ -49,5 +49,6 @@ protected:
     ShapeType m_shapetype;
 
 };
+
 
 #endif // SHAPEDATA_H
