@@ -17,5 +17,21 @@
         <file>recourse/icon/eraser.png</file>
         <file>recourse/icon/pencil.png</file>
         <file>recourse/icon/none.jpg</file>
+        <file>recourse/icon/underline.png</file>
+        <file>recourse/icon/save.png</file>
+        <file>recourse/icon/prinnt.png</file>
+        <file>recourse/icon/paste.png</file>
+        <file>recourse/icon/open_.png</file>
+        <file>recourse/icon/new.png</file>
+        <file>recourse/icon/italic.png</file>
+        <file>recourse/icon/info.png</file>
+        <file>recourse/icon/exit.png</file>
+        <file>recourse/icon/redo_.png</file>
+        <file>recourse/icon/undo.png</file>
+        <file>recourse/icon/cut.png</file>
+        <file>recourse/icon/create.png</file>
+        <file>recourse/icon/copy.png</file>
+        <file>recourse/icon/bold.png</file>
+        <file>recourse/icon/font.png</file>
     </qresource>
 </RCC>

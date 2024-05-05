@@ -47,8 +47,7 @@ public:
     void  mouseMoveEvent(QMouseEvent*event)override;
     void  mouseReleaseEvent(QMouseEvent*event)override;
 
-    inline void SetShapeType(const ShapeType &shapeType){m_Shapetype=shapeType;}
-    int eraser(QPoint,int size);
+    inline void SetShapeType(const ShapeType &shapeType){m_Shapetype=shapeType;};
 
     int RotateLeft();
     int RotateRight();
@@ -70,7 +69,6 @@ private:
     Rotatetype m_RotateType;//观测旋转类型
 
     bool m_bLBtnClicked;//鼠标左键是否按下
-    double m_dZoom;//缩放比例//缩放和橡皮擦等功能将在2.0实现
     ShapeType m_Shapetype;//当前绘画的图形的类型
 
 

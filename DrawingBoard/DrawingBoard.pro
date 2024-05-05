@@ -1,5 +1,6 @@
 QT       += core gui
 QT       +=    core gui opengl
+qtHaveModule(printsupport):QT+=printsupport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 # The following define makes your compiler emit warnings if you use
@@ -22,6 +23,7 @@ SOURCES += \
     ellipsedata.cpp \
     linedata.cpp \
     main.cpp \
+    notepad.cpp \
     pencildata.cpp \
     systemdata.cpp \
     textcontentedit.cpp \
@@ -34,6 +36,7 @@ HEADERS += \
     TriangleData.h \
     ellipsedata.h \
     linedata.h \
+    notepad.h \
     pencildata.h \
     shapedata.h \
     sizestandard.h \
@@ -42,7 +45,7 @@ HEADERS += \
     textdata.h
 
 FORMS += \
-    DrawingBoard.ui
+    notepad.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

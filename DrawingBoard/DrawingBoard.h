@@ -6,6 +6,7 @@
 #include<QToolButton>
 #include<DrawWidget.h>
 #include<QPixmap>
+#include"notepad.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -17,6 +18,10 @@ class DrawingboardWidget : public QWidget
 public:
     DrawingboardWidget(QWidget *parent = nullptr);
     ~DrawingboardWidget();
+    notepad *notepage=NULL;//用来保存notepad页面的实例化对象的地址
+
+
+
     void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
@@ -28,6 +33,7 @@ protected slots:
      int  fn_Recv_rotateLeftButton_Clicked();
      int  fn_Recv_rotateRightButton_Clicked();
      int fn_Recv_Pencil_Clicked();
+     int fn_Recv_SwitchToNoteButton_Clicked();
 
 
 private:
@@ -41,6 +47,7 @@ private:
     QToolButton m_TextButton;//文本框
     QToolButton m_rotateLeftButton;//左旋转
     QToolButton m_rotateRightButton;//右旋转
+     QToolButton m_SwitchToNoteButton;//切换按钮
 
 
 

@@ -5,10 +5,10 @@
 DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setWindowTitle(QStringLiteral("qtnote2.0"));
+    setWindowTitle(QStringLiteral("qtnote3.0"));
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note1.png")));
 
-
+    this->notepage=new notepad;//实例化note窗口
 
     m_RectangleButton.setParent(this);
     m_EllipseButton.setParent(this);
@@ -62,8 +62,6 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     m_rotateRightButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
 
-
-
     m_Pencil.setParent(this);
     m_Pencil.setText(QString("铅笔"));
     m_Pencil.setIcon(QIcon(QString(":/icon/recourse/icon/pencil.png")));
@@ -71,6 +69,12 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     m_Pencil.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
 
+
+    m_SwitchToNoteButton.setParent(this);
+    m_SwitchToNoteButton.setText(QString("note模式"));
+    m_SwitchToNoteButton.setIcon(QIcon(QString(":/icon/recourse/icon/note.png")));
+    m_SwitchToNoteButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_SwitchToNoteButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     QObject::connect(&m_RectangleButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_RectangleButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_EllipseButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_EllipseButton_Clicked, Qt::DirectConnection);
@@ -80,8 +84,8 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     QObject::connect(&m_rotateLeftButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateLeftButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_rotateRightButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateRightButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_Pencil, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_Pencil_Clicked, Qt::DirectConnection);
-
-
+    QObject::connect(&m_SwitchToNoteButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked, Qt::DirectConnection);
+    connect(this->notepage,&notepad::back,this,[=](){this->notepage->hide(); this->show();});
 }
 
 
@@ -100,6 +104,7 @@ void DrawingboardWidget::resizeEvent(QResizeEvent *event)
 
     m_rotateLeftButton.setGeometry(0,6*ICON_SIZE,ICON_SIZE,ICON_SIZE);
     m_rotateRightButton.setGeometry(0,7*ICON_SIZE,ICON_SIZE,ICON_SIZE);
+    m_SwitchToNoteButton.setGeometry(0,8*ICON_SIZE,ICON_SIZE,ICON_SIZE);
 
 
     m_DrawWidget.setGeometry(ICON_SIZE,5,width()-ICON_SIZE-5,height()-5);
@@ -155,5 +160,10 @@ int DrawingboardWidget::fn_Recv_Pencil_Clicked(){
   m_DrawWidget.SetShapeType(ShapeType::Shape_Pencil);
   m_DrawWidget.m_isdraw=1;
   m_DrawWidget.m_iseraser=0;
+    return NORMAL_RETURN;
+}
+int DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked(){
+     this->hide();
+    this->notepage->show();
     return NORMAL_RETURN;
 }
