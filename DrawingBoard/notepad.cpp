@@ -2,6 +2,8 @@
 #include "ui_notepad.h"
 #include<QDebug>
 
+QSettings *m_settings;
+
 notepad::notepad(QWidget *parent) :
 
     QMainWindow(parent),
@@ -10,6 +12,10 @@ notepad::notepad(QWidget *parent) :
     ui->setupUi(this);
     this->setCentralWidget(ui->textEdit);
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note.png")));
+    if(m_settings==NULL){
+        m_settings= new QSettings("setings.ini",QSettings::IniFormat);
+    }
+    initMenu();
 
 }
 
@@ -17,6 +23,81 @@ notepad::~notepad()
 {
     delete ui;
 }
+
+QList<QString> notepad::GetHistory(){
+    //开始读取数据
+    int iSize=m_settings->beginReadArray("history");
+    //创建返回对象
+    QList<QString> history_list;
+    for(int i=0;i<iSize;i++){
+        m_settings->setArrayIndex(i);
+        QString path=m_settings->value("path").toString();
+        history_list.append( path);
+    }
+    m_settings->endArray();
+    return history_list;
+}
+
+void notepad::saveHistory(QString path){
+    /*开始获取数组长度
+    int iSize= m_settings->beginReadArray("history");
+     m_settings->endArray();
+    //如果只写一个的话就会导致每一次都会覆盖,当写过gethistory这个函数后作了一定修改,使其能够去重*/
+    QList<QString> history_list=GetHistory();
+    history_list.append(path);
+    history_list.removeDuplicates(); // 去重
+        // 确保历史记录列表不超过某个大小（例如，10个）
+        while (history_list.size() >= 10 && !history_list.isEmpty()) {
+            history_list.removeFirst();
+        }
+
+    //开始写入
+    m_settings->beginWriteArray("history");
+    for(int i=0;i<history_list.size();i++){
+        m_settings->setArrayIndex(i);
+        //保存字符串
+        m_settings->setValue("path",history_list[i]);
+    }
+    //结束写入
+    m_settings->endArray();
+    initMenu();
+}//保存打开历史记录
+
+
+void notepad::initMenu()
+{
+    QMenu *recently=this->findChild<QMenu *>("recently");
+    QList<QObject*> chLists= recently->children();
+    foreach(QObject *ch,chLists){
+        QAction *action=(QAction *)ch;
+        recently->removeAction(action);
+    }
+    QList<QString> history_lists=GetHistory();
+    foreach(QString string,history_lists){
+        recently->addAction(string,this,&notepad::open_recent_file);
+    }
+}//初始化菜单
+
+void notepad::open_recent_file()
+{
+    QAction *action=(QAction*)sender();
+    QString m_Current_FlieName=action->text();
+    QFile file(m_Current_FlieName);
+    if(!file.open(QIODevice::ReadOnly|QFile::Text)){
+        QMessageBox::warning(this,"警告","无法打开或无法修改本文件："+file.errorString());
+        return;
+    }
+    m_FileName=m_Current_FlieName;
+    setWindowTitle(m_FileName+("-open with qtnote3.0"));
+    QTextStream in(&file);
+    in.setCodec("UTF_8");
+    QString Current_text=in.readAll();
+    ui->textEdit->setText(Current_text);
+    file.close();
+    saveHistory(m_FileName);
+}//打开最近文件
+
+
 
 void notepad::on_action_newfile_triggered()
 {
@@ -39,6 +120,7 @@ void notepad::on_action_open_triggered()
     QString Current_text=in.readAll();
     ui->textEdit->setText(Current_text);
     file.close();
+    saveHistory(m_FileName);
 }//打开文件
 
 void notepad::on_action_save_triggered()
@@ -62,6 +144,8 @@ void notepad::on_action_save_triggered()
     QString text=ui->textEdit->toPlainText();
     out<<text;
     file.close();
+    saveHistory(m_FileName);
+
 }//保存文件
 
 void notepad::on_action_save_as_triggered()
@@ -79,6 +163,7 @@ void notepad::on_action_save_as_triggered()
     QString text=ui->textEdit->toPlainText();
     out<<text;
     file.close();
+    saveHistory(m_FileName);
 }//另存为
 
 void notepad::on_action_paste_triggered()
@@ -139,5 +224,12 @@ void notepad::on_action_exit_triggered()
 {
     emit this->back();
 }
+
+void notepad::on_action_history_clear_triggered()
+{
+    m_settings->remove("history");
+    initMenu();
+
+}//清空打开历史记录
 
 

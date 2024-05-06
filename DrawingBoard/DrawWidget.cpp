@@ -150,7 +150,6 @@ void DrawWidget::paintEvent(QPaintEvent *event){
             break;
             }
         case ShapeType::Shape_Triangle:{
-             painter.setPen(m_BlackPen);
             double iX1=m_ClickedPoint.x()<m_MovePoint.x()?m_ClickedPoint.x():m_MovePoint.x();
             double iY1=m_ClickedPoint.y()>m_MovePoint.y()?m_ClickedPoint.y():m_MovePoint.y();
             QPoint dis=m_MovePoint-m_ClickedPoint;
@@ -186,8 +185,9 @@ void DrawWidget::paintEvent(QPaintEvent *event){
         }
 
     }
-    QPainter painter1(this);
-    painter1.drawPixmap(0,0, pix);//将pixmap画到窗体
+    painter.end();
+    painter.begin(this);
+    painter.drawPixmap(0,0, pix);//将pixmap画到窗体
 }
 void DrawWidget::resizeEvent(QResizeEvent *event){
      m_openButton.setGeometry(width()-ICON_SIZE,0,ICON_SIZE,ICON_SIZE);

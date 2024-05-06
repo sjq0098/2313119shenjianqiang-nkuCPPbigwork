@@ -5,8 +5,9 @@
 #include<QPushButton>
 #include<QFileDialog>
 #include<QMessageBox>
-
+#include<QSettings>
 #include<QFontDialog>
+#include<QList>
 namespace Ui {
 class notepad;
 }
@@ -51,9 +52,15 @@ private slots:
 
     void on_action_exit_triggered();
 
+    void on_action_history_clear_triggered();
+
 private:
     Ui::notepad *ui;
     QString m_FileName;
+    void initMenu();
+    void open_recent_file();
+    void saveHistory(QString path);
+    QList<QString> GetHistory();
 };
 
 #endif // NOTEPAD_H

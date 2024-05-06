@@ -274,6 +274,7 @@ Makefile: ../DrawingBoard/DrawingBoard.pro ../../Qt5.14.2/5.14.2/mingw73_64/mksp
 		../../Qt5.14.2/5.14.2/mingw73_64/mkspecs/features/lex.prf \
 		../DrawingBoard/DrawingBoard.pro \
 		../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5OpenGL.prl \
+		../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5PrintSupport.prl \
 		../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Widgets.prl \
 		../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Gui.prl \
 		../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Core.prl \
@@ -485,6 +486,7 @@ Makefile: ../DrawingBoard/DrawingBoard.pro ../../Qt5.14.2/5.14.2/mingw73_64/mksp
 ../../Qt5.14.2/5.14.2/mingw73_64/mkspecs/features/lex.prf:
 ../DrawingBoard/DrawingBoard.pro:
 ../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5OpenGL.prl:
+../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5PrintSupport.prl:
 ../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Widgets.prl:
 ../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Gui.prl:
 ../../Qt5.14.2/5.14.2/mingw73_64/lib/Qt5Core.prl:

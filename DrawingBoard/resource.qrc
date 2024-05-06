@@ -33,5 +33,7 @@
         <file>recourse/icon/copy.png</file>
         <file>recourse/icon/bold.png</file>
         <file>recourse/icon/font.png</file>
+        <file>recourse/icon/clear_history.png</file>
+        <file>recourse/icon/open_recently.png</file>
     </qresource>
 </RCC>

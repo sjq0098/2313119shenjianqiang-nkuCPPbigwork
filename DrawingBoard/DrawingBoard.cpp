@@ -5,9 +5,9 @@
 DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setWindowTitle(QStringLiteral("qtnote3.0"));
+    setWindowTitle(QStringLiteral("qtnote4.0"));
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note1.png")));
-
+    this->setGeometry(0,0,1920,1080);
     this->notepage=new notepad;//实例化note窗口
 
     m_RectangleButton.setParent(this);

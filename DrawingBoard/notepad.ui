@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>qtnote3.0-notepad</string>
+   <string>qtnote4.0-notepad</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
@@ -45,7 +45,14 @@
     <property name="title">
      <string>文件</string>
     </property>
+    <widget class="QMenu" name="recently">
+     <property name="title">
+      <string>最近打开</string>
+     </property>
+     <addaction name="action_history_clear"/>
+    </widget>
     <addaction name="action_open"/>
+    <addaction name="recently"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
     <addaction name="action_newfile"/>
@@ -303,6 +310,18 @@
    </property>
    <property name="shortcut">
     <string>Esc</string>
+   </property>
+  </action>
+  <action name="action_history_clear">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icon/recourse/icon/clear_history.png</normaloff>:/icon/recourse/icon/clear_history.png</iconset>
+   </property>
+   <property name="text">
+    <string>清除历史</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+C</string>
    </property>
   </action>
  </widget>

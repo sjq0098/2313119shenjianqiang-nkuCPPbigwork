@@ -6,6 +6,7 @@ debug/TriangleData.o
 debug/ellipsedata.o
 debug/linedata.o
 debug/main.o
+debug/notepad.o
 debug/pencildata.o
 debug/systemdata.o
 debug/textcontentedit.o
@@ -13,4 +14,5 @@ debug/textdata.o
 debug/qrc_resource.o
 debug/moc_DrawWidget.o
 debug/moc_DrawingBoard.o
+debug/moc_notepad.o
 debug/moc_textcontentedit.o

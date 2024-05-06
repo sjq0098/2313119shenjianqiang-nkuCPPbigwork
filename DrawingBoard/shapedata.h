@@ -11,6 +11,7 @@ enum class ShapeType
     Shape_Line=4,//直线
     Shape_Text=5,//文本
     Shape_Pencil=6,
+    Shape_Eraser=7,
 };
 
 
