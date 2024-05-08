@@ -31,7 +31,7 @@ DrawWidget::DrawWidget(QWidget*parent):QWidget(parent){
 
 
 
-    m_TextFont.setFamily(QString::fromUtf8("楷体"));
+    m_TextFont.setFamily(QString::fromUtf8("华文行楷"));
     m_TextFont.setPixelSize(30);
     m_ContentEdit.setParent(this);
     m_ContentEdit.hide();

@@ -8,6 +8,10 @@
 #include<QSettings>
 #include<QFontDialog>
 #include<QList>
+#include<QTabWidget>
+#include<qevent.h>
+
+#include"textedit_form.h"
 namespace Ui {
 class notepad;
 }
@@ -19,6 +23,8 @@ class notepad : public QMainWindow
 public:
     explicit notepad(QWidget *parent = nullptr);
     ~notepad();
+    bool checkSaveState();
+
 signals:
     void  back();
 private slots:
@@ -56,11 +62,19 @@ private slots:
 
 private:
     Ui::notepad *ui;
-    QString m_FileName;
+
+    QString m_FileName;    
+    bool isSaved=false;
+
+
+
     void initMenu();
     void open_recent_file();
     void saveHistory(QString path);
     QList<QString> GetHistory();
+    void updateSaveState();
+protected:
+    void closeEvent(QCloseEvent*event);
 };
 
 #endif // NOTEPAD_H

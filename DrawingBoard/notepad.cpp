@@ -2,8 +2,7 @@
 #include "ui_notepad.h"
 #include<QDebug>
 
-QSettings *m_settings;
-
+ QSettings *m_settings;
 notepad::notepad(QWidget *parent) :
 
     QMainWindow(parent),
@@ -16,13 +15,14 @@ notepad::notepad(QWidget *parent) :
         m_settings= new QSettings("setings.ini",QSettings::IniFormat);
     }
     initMenu();
-
+    connect(this,SIGNAL(ui->textEdit->textChanged()),this,SLOT(updateSaveState()));
 }
 
 notepad::~notepad()
 {
     delete ui;
 }
+
 
 QList<QString> notepad::GetHistory(){
     //开始读取数据
@@ -37,6 +37,7 @@ QList<QString> notepad::GetHistory(){
     m_settings->endArray();
     return history_list;
 }
+
 
 void notepad::saveHistory(QString path){
     /*开始获取数组长度
@@ -101,8 +102,10 @@ void notepad::open_recent_file()
 
 void notepad::on_action_newfile_triggered()
 {
+    QFont font("华文行楷",14);
     m_FileName.clear();
     ui->textEdit->setText("");
+    ui->textEdit->setFont(font);
 }//新建文件
 
 void notepad::on_action_open_triggered()
@@ -114,7 +117,7 @@ void notepad::on_action_open_triggered()
         return;
     }
     m_FileName=m_Current_FlieName;
-    setWindowTitle(m_FileName+("-open with qtnote3.0"));
+    setWindowTitle(m_FileName+("-open with qtnote5.0"));
     QTextStream in(&file);
     in.setCodec("UTF_8");
     QString Current_text=in.readAll();
@@ -145,7 +148,7 @@ void notepad::on_action_save_triggered()
     out<<text;
     file.close();
     saveHistory(m_FileName);
-
+    isSaved=true;
 }//保存文件
 
 void notepad::on_action_save_as_triggered()
@@ -164,6 +167,7 @@ void notepad::on_action_save_as_triggered()
     out<<text;
     file.close();
     saveHistory(m_FileName);
+    isSaved=true;
 }//另存为
 
 void notepad::on_action_paste_triggered()
@@ -232,4 +236,27 @@ void notepad::on_action_history_clear_triggered()
 
 }//清空打开历史记录
 
-
+void notepad::closeEvent(QCloseEvent *event)
+{
+    if(!checkSaveState()){
+         QMessageBox::StandardButton btn=  QMessageBox::question(this,"提示","还未保存，是否保存并退出？",QMessageBox::Yes|QMessageBox::No|QMessageBox::NoAll);
+         if(btn==QMessageBox::Yes){
+             on_action_save_triggered();
+             event->accept();
+         }
+         else if(btn==QMessageBox::No){
+             event->ignore();
+         }
+         else{
+             event->accept();
+         }
+    }
+}
+void notepad::updateSaveState()
+{
+    isSaved=false;
+}//更新保存状态
+bool notepad::checkSaveState()
+{
+    return isSaved;
+}//检查保存状态

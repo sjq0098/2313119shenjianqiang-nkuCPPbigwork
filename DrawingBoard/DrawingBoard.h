@@ -6,6 +6,7 @@
 #include<QToolButton>
 #include<DrawWidget.h>
 #include<QPixmap>
+#include<qevent.h>
 #include"notepad.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -20,9 +21,8 @@ public:
     ~DrawingboardWidget();
     notepad *notepage=NULL;//用来保存notepad页面的实例化对象的地址
 
-
-
     void resizeEvent(QResizeEvent *event) override;
+
 
 protected slots:
     int fn_Recv_RectangleButton_Clicked();
@@ -52,8 +52,6 @@ private:
 
 
     DrawWidget m_DrawWidget;//绘画窗体
-
-
 
  } ;
 #endif // DRAWINGBOARD_H
