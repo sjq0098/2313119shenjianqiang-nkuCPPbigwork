@@ -9,13 +9,13 @@ notepad::notepad(QWidget *parent) :
     ui(new Ui::notepad)
 {
     ui->setupUi(this);
-    this->setCentralWidget(ui->textEdit);
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note.png")));
     if(m_settings==NULL){
         m_settings= new QSettings("setings.ini",QSettings::IniFormat);
     }
     initMenu();
     initFont();
+    initTree();
     connect(this,SIGNAL(ui->textEdit->textChanged()),this,SLOT(updateSaveState()));
 }
 
@@ -90,7 +90,7 @@ void notepad::open_recent_file()
         return;
     }
     m_FileName=m_Current_FlieName;
-    setWindowTitle(m_FileName+("-open with qtnote3.0"));
+    setWindowTitle(m_FileName+("-open with qtnote8.0"));
     QTextStream in(&file);
     in.setCodec("UTF_8");
     QString Current_text=in.readAll();
@@ -118,7 +118,7 @@ void notepad::on_action_open_triggered()
         return;
     }
     m_FileName=m_Current_FlieName;
-    setWindowTitle(m_FileName+("-open with qtnote5.0"));
+    setWindowTitle(m_FileName+("-open with qtnote8.0"));
     QTextStream in(&file);
     in.setCodec("UTF_8");
     QString Current_text=in.readAll();
@@ -237,6 +237,7 @@ void notepad::on_action_history_clear_triggered()
 
 }//清空打开历史记录
 
+
 void notepad::closeEvent(QCloseEvent *event)
 {
     if(!checkSaveState()){
@@ -266,4 +267,105 @@ void notepad::initFont()
 {
      QFont font("华文行楷",14);
      ui->textEdit->setFont(font);
+}
+
+void notepad::initTree()
+{
+    m_FileSystemModel=new MyFileSystemModel();
+    m_FileSystemModel->setRootPath("E:/学习资料/");
+    ui->treeView->setModel(m_FileSystemModel);
+    ui->treeView->setRootIndex(m_FileSystemModel->index("E:/学习资料/"));//根目录设置
+
+    ui->treeView->setColumnHidden(1,true);
+    ui->treeView->setColumnHidden(2,true);
+    ui->treeView->setColumnHidden(3,true);
+    ui->treeView->setHeaderHidden(true);//文件树样式设置
+    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);//右键菜单
+    ui->treeView->setEditTriggers(QTreeView::NoEditTriggers);//取消双击编辑，使能够双击打开文件
+
+    connect(ui->treeView,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(onDoubleClicked(const QModelIndex &)));//双击打开文件
+    connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &notepad::showcustomContextMenu);//右键展开菜单
+}//初始化文件树
+void notepad::showcustomContextMenu(const QPoint &pos)
+{
+    QModelIndex index=ui->treeView->indexAt(pos);
+    QMenu menu(this);
+    if(m_FileSystemModel->isDir(index)){
+        QString filepath =m_FileSystemModel->filePath(index);
+        if(filepath.isEmpty()){filepath="E:/学习资料/";};
+        menu.addAction("新建文件",[=](){
+            QString filename= filepath+"新文件"+QDateTime::currentDateTime().toString("yyyy_MM_dd hh_mm_ss")+".txt";
+            QFile file(filename);
+
+            if(!file.open(QIODevice::ReadWrite)){
+                QMessageBox::warning(this,"新建提示","新建文件\n"+filename+"\n 失败！可能没有权限或文件已经存在");
+            }
+            file.close();
+        });
+        menu.addAction("新建文件夹",[=](){
+            QDir dir (filepath);
+            QString dirname= "新文件夹"+QDateTime::currentDateTime().toString("yyyy_MM_dd hh_mm_ss");
+            if(!dir.exists(dirname)){
+                dir.mkdir(dirname);
+            }
+        });
+        menu.addAction("重命名",[=](){
+            ui->treeView->edit(index);
+        });
+    }
+    else{
+        menu.addAction("重命名",[=](){
+            ui->treeView->edit(index);
+        });
+
+        menu.addAction("删除文件",[=](){
+            QString filename= m_FileSystemModel->fileName(index);
+            QString filepath =m_FileSystemModel->filePath(index);
+            QMessageBox::StandardButton btn= QMessageBox::question(this,"删除提示","确定删除文件吗？\n"+filename+"\n 删了就找不到了哦",QMessageBox::Yes|QMessageBox::No);
+            if(btn==QMessageBox::Yes){
+               if(!QFile::remove(filepath)){
+                  QMessageBox::warning(this,"删除提示","删除文件\n"+filename+"\n 删除失败！可能没有权限或文件不存在");
+               }
+            }
+        });
+        menu.addAction("打开文件");
+    }
+
+
+    menu.exec(QCursor::pos());
+}
+
+void notepad::onDoubleClicked(const QModelIndex &index)
+{
+    if(!m_FileSystemModel->isDir(index)){
+        QString filename = m_FileSystemModel->fileName(index);
+        QString filepath =m_FileSystemModel->filePath(index);
+        qDebug()<<filename;
+        if (!filename.isEmpty()) {
+            // 检查文件后缀
+            QFileInfo fileInfo(filename);
+            QString suffix = fileInfo.suffix().toLower(); // 转换为小写以进行不区分大小写的比较
+            if (suffix != "txt" && suffix != "cpp" && suffix != "h") {
+                // 文件后缀不符合要求，显示错误消息
+                QMessageBox::warning(this, "错误", "选择的文件不是可读文件类型！");
+                return; // 退出函数
+            }
+            else {
+                QFile file(filepath);
+                if(!file.open(QIODevice::ReadOnly )){
+                    // 如果文件无法打开，显示错误消息
+                    QMessageBox::warning(this, "警告", "无法打开或无法修改本文件：" + file.errorString());
+                    return; // 退出函数
+                }
+                m_FileName = filename;
+                setWindowTitle(m_FileName + " - open with qtnote8.0");
+                QTextStream in(&file);
+                in.setCodec("UTF-8");
+                QString Current_text = in.readAll();
+                ui->textEdit->setText(Current_text);
+                file.close();
+                saveHistory(m_FileName);
+            }
+        }
+    }
 }

@@ -10,6 +10,7 @@ debug/eraserdata.o
 debug/form_start.o
 debug/linedata.o
 debug/main.o
+debug/myfilesystemmodel.o
 debug/notepad.o
 debug/pencildata.o
 debug/systemdata.o
@@ -19,5 +20,6 @@ debug/qrc_resource.o
 debug/moc_DrawWidget.o
 debug/moc_DrawingBoard.o
 debug/moc_form_start.o
+debug/moc_myfilesystemmodel.o
 debug/moc_notepad.o
 debug/moc_textcontentedit.o

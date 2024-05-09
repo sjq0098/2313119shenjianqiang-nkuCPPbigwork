@@ -27,6 +27,7 @@ SOURCES += \
     form_start.cpp \
     linedata.cpp \
     main.cpp \
+    myfilesystemmodel.cpp \
     notepad.cpp \
     pencildata.cpp \
     systemdata.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     eraserdata.h \
     form_start.h \
     linedata.h \
+    myfilesystemmodel.h \
     notepad.h \
     pencildata.h \
     shapedata.h \

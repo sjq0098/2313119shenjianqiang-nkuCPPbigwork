@@ -118,7 +118,7 @@ void DrawWidget::paintEvent(QPaintEvent *event){
             }
         case ShapeType::Shape_Text:{
          Textdata* pTextData=static_cast<Textdata*>(pShape);
-        painter.setPen(m_BlackPen);
+         painter.setPen(m_BlackPen);
          painter.drawText(QPointF(pTextData->GetStartPosX(),pTextData->GetStartPosY()),pTextData->GetQstr_content());
          break;
          }
@@ -320,16 +320,19 @@ void DrawWidget:: mouseReleaseEvent(QMouseEvent*event){
              else{
                  m_ContentEdit.hide();
              }
+             break;
          }
         case ShapeType::Shape_Pencil:{
             PencilData* pPencilData= new PencilData(drawingPath1);
             m_pSystemData->m_ShapeVec.push_back(pPencilData);
             update();
+            break;
         }
         case ShapeType::Shape_Eraser:{
             EraserData* pEraserData= new EraserData(drawingPath2);
             m_pSystemData->m_ShapeVec.push_back(pEraserData);
             update();
+            break;
         }
         case ShapeType::Shape_Arc:{
             double iX1=m_ClickedPoint.x()<m_MovePoint.x()?m_ClickedPoint.x():m_MovePoint.x();
@@ -372,7 +375,6 @@ void DrawWidget:: mouseMoveEvent(QMouseEvent*event){
     update();
 
 };
-
 
 
 int DrawWidget::fn_Recv_ContentEdit_GetContent(const QString &qstrContent){

@@ -10,7 +10,9 @@
 #include<QList>
 #include<QTabWidget>
 #include<qevent.h>
+#include<QDateTime>
 
+#include<myfilesystemmodel.h>
 namespace Ui {
 class notepad;
 }
@@ -59,6 +61,9 @@ private slots:
 
     void on_action_history_clear_triggered();
 
+    void showcustomContextMenu(const QPoint &pos);
+    void onDoubleClicked(const QModelIndex &index);
+
 private:
     Ui::notepad *ui;
 
@@ -67,10 +72,12 @@ private:
 
     void initMenu();
     void initFont();
+    void initTree();
     void open_recent_file();
     void saveHistory(QString path);
     QList<QString> GetHistory();
     void updateSaveState();
+    MyFileSystemModel *m_FileSystemModel;
 protected:
     void closeEvent(QCloseEvent*event);
 };

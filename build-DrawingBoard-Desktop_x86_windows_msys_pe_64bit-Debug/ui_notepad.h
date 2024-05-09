@@ -13,12 +13,16 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +47,9 @@ public:
     QAction *action_exit;
     QAction *action_history_clear;
     QWidget *centralwidget;
+    QHBoxLayout *horizontalLayout;
+    QSplitter *splitter;
+    QTreeView *treeView;
     QTextEdit *textEdit;
     QMenuBar *menubar;
     QMenu *menu;
@@ -145,9 +152,25 @@ public:
         action_history_clear->setIcon(icon16);
         centralwidget = new QWidget(notepad);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        textEdit = new QTextEdit(centralwidget);
+        horizontalLayout = new QHBoxLayout(centralwidget);
+        horizontalLayout->setSpacing(0);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        splitter = new QSplitter(centralwidget);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        splitter->setHandleWidth(0);
+        treeView = new QTreeView(splitter);
+        treeView->setObjectName(QString::fromUtf8("treeView"));
+        treeView->setEnabled(true);
+        treeView->setMaximumSize(QSize(400, 16777215));
+        splitter->addWidget(treeView);
+        textEdit = new QTextEdit(splitter);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(40, 20, 104, 70));
+        splitter->addWidget(textEdit);
+
+        horizontalLayout->addWidget(splitter);
+
         notepad->setCentralWidget(centralwidget);
         menubar = new QMenuBar(notepad);
         menubar->setObjectName(QString::fromUtf8("menubar"));
