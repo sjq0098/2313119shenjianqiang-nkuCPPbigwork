@@ -68,13 +68,12 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     m_Pencil.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
     m_Pencil.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    m_exitButton.setParent(this);
+    m_exitButton.setText(QString("退出"));
+    m_exitButton.setIcon(QIcon(QString(":/icon/recourse/icon/exit.png")));
+    m_exitButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_exitButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-
-    m_SwitchToNoteButton.setParent(this);
-    m_SwitchToNoteButton.setText(QString("note模式"));
-    m_SwitchToNoteButton.setIcon(QIcon(QString(":/icon/recourse/icon/note.png")));
-    m_SwitchToNoteButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
-    m_SwitchToNoteButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
     QObject::connect(&m_RectangleButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_RectangleButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_EllipseButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_EllipseButton_Clicked, Qt::DirectConnection);
@@ -84,7 +83,7 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     QObject::connect(&m_rotateLeftButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateLeftButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_rotateRightButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateRightButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_Pencil, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_Pencil_Clicked, Qt::DirectConnection);
-    QObject::connect(&m_SwitchToNoteButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked, Qt::DirectConnection);
+    QObject::connect(&m_exitButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked, Qt::DirectConnection);
     connect(this->notepage,&notepad::back,this,[=](){this->notepage->hide(); this->show();});
 }
 
@@ -104,8 +103,7 @@ void DrawingboardWidget::resizeEvent(QResizeEvent *event)
 
     m_rotateLeftButton.setGeometry(0,6*ICON_SIZE,ICON_SIZE,ICON_SIZE);
     m_rotateRightButton.setGeometry(0,7*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_SwitchToNoteButton.setGeometry(0,8*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-
+    m_exitButton.setGeometry(0,8*ICON_SIZE,ICON_SIZE,ICON_SIZE);
 
     m_DrawWidget.setGeometry(ICON_SIZE,5,width()-ICON_SIZE-5,height()-5);
     QWidget::resizeEvent(event);
@@ -115,55 +113,55 @@ void DrawingboardWidget::resizeEvent(QResizeEvent *event)
 int DrawingboardWidget::fn_Recv_RectangleButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Rectangle);
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_EllipseButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Ellipse);
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_trangleButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Triangle);
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_lineButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Line);
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_TextButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Text);
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 
 }
 int DrawingboardWidget::fn_Recv_rotateLeftButton_Clicked(){
     m_DrawWidget.RotateLeft();
     m_DrawWidget.m_isdraw=0;
-         m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 
 }
 int DrawingboardWidget::fn_Recv_rotateRightButton_Clicked(){
     m_DrawWidget.RotateRight();
     m_DrawWidget.m_isdraw=0;
-    m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_Pencil_Clicked(){
   m_DrawWidget.SetShapeType(ShapeType::Shape_Pencil);
   m_DrawWidget.m_isdraw=1;
-  m_DrawWidget.m_iseraser=0;
+
     return NORMAL_RETURN;
 }
+
 int DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked(){
-     this->hide();
-    this->notepage->show();
+    emit this->back();
     return NORMAL_RETURN;
 }

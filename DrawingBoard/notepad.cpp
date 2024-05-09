@@ -15,6 +15,7 @@ notepad::notepad(QWidget *parent) :
         m_settings= new QSettings("setings.ini",QSettings::IniFormat);
     }
     initMenu();
+    initFont();
     connect(this,SIGNAL(ui->textEdit->textChanged()),this,SLOT(updateSaveState()));
 }
 
@@ -260,3 +261,9 @@ bool notepad::checkSaveState()
 {
     return isSaved;
 }//检查保存状态
+
+void notepad::initFont()
+{
+     QFont font("华文行楷",14);
+     ui->textEdit->setFont(font);
+}

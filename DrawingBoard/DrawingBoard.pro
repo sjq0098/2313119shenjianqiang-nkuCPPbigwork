@@ -21,6 +21,7 @@ SOURCES += \
     ShapeData.cpp \
     TriangleData.cpp \
     ellipsedata.cpp \
+    form_start.cpp \
     linedata.cpp \
     main.cpp \
     notepad.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     RectangleData.h \
     TriangleData.h \
     ellipsedata.h \
+    form_start.h \
     linedata.h \
     notepad.h \
     pencildata.h \
@@ -45,6 +47,7 @@ HEADERS += \
     textdata.h
 
 FORMS += \
+    form_start.ui \
     notepad.ui
 
 # Default rules for deployment.
@@ -54,3 +57,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
+

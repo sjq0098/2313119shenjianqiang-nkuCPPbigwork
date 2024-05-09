@@ -35,5 +35,10 @@
         <file>recourse/icon/font.png</file>
         <file>recourse/icon/clear_history.png</file>
         <file>recourse/icon/open_recently.png</file>
+        <file>recourse/icon/coolbackground.png</file>
+        <file>recourse/icon/cool-background.png</file>
+        <file>recourse/cool-background.png</file>
+        <file>recourse/bg_bggenerator_com.png</file>
+        <file>recourse/icon/notebook.png</file>
     </qresource>
 </RCC>

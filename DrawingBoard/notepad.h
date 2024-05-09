@@ -11,7 +11,6 @@
 #include<QTabWidget>
 #include<qevent.h>
 
-#include"textedit_form.h"
 namespace Ui {
 class notepad;
 }
@@ -66,9 +65,8 @@ private:
     QString m_FileName;    
     bool isSaved=false;
 
-
-
     void initMenu();
+    void initFont();
     void open_recent_file();
     void saveHistory(QString path);
     QList<QString> GetHistory();

@@ -4,6 +4,7 @@ release/RectangleData.o
 release/ShapeData.o
 release/TriangleData.o
 release/ellipsedata.o
+release/form_start.o
 release/linedata.o
 release/main.o
 release/notepad.o
@@ -14,5 +15,6 @@ release/textdata.o
 release/qrc_resource.o
 release/moc_DrawWidget.o
 release/moc_DrawingBoard.o
+release/moc_form_start.o
 release/moc_notepad.o
 release/moc_textcontentedit.o

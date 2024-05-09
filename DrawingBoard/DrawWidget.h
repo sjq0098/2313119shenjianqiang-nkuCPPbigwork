@@ -16,6 +16,7 @@
 
 
 
+
 #include"QPainter"
 #include"QMenu"
 #include<QMouseEvent>
@@ -56,7 +57,6 @@ public:
      QToolButton m_keepButton;
 
     bool m_isdraw;
-    bool m_iseraser;
 protected:
     int fn_Recv_ContentEdit_GetContent(const QString &qstrContent);
     int SavePic();//保存图片
@@ -88,6 +88,7 @@ private:
     int _openflag;//打开图片
     QPixmap _pixmap;//画布图片
     QPainterPath drawingPath1;
+    QPainterPath drawingPath2;
 
 
 

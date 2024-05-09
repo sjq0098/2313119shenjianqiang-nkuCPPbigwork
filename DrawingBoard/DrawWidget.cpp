@@ -26,9 +26,8 @@ DrawWidget::DrawWidget(QWidget*parent):QWidget(parent){
     m_NullBrush.setStyle(Qt::BrushStyle::NoBrush);
     m_BlackPen.setColor(QColor(0,0,0));
     m_BlackPen.setWidth(5);
-
-
-
+    m_WhitePen.setColor(Qt::white);
+    m_WhitePen.setWidth(7);
 
 
     m_TextFont.setFamily(QString::fromUtf8("华文行楷"));
@@ -56,8 +55,6 @@ void DrawWidget::paintEvent(QPaintEvent *event){
 
     QPixmap pix = _pixmap;//以_pixmap作为画布
     QPainter painter(&pix);//将_pixmap作为画布
-    QPainter pw(&pix);
-    pw.setPen(m_WhitePen);
     painter.setPen(m_BlackPen);
     painter.setFont(m_TextFont);
     painter.setBrush(m_NullBrush);
@@ -128,7 +125,6 @@ void DrawWidget::paintEvent(QPaintEvent *event){
          }
         case ShapeType::Shape_Pencil:{
         PencilData *pPencil=static_cast< PencilData*>(pShape);
-
         painter.drawPath(pPencil->Getdrawpath());
         break;
         }
@@ -181,6 +177,7 @@ void DrawWidget::paintEvent(QPaintEvent *event){
         painter.drawPath(drawingPath1);
         break;
         }
+
         default:{break;};
         }
 
@@ -277,6 +274,7 @@ void DrawWidget:: mouseReleaseEvent(QMouseEvent*event){
             m_pSystemData->m_ShapeVec.push_back(pPencilData);
             update();
         }
+
          default:{break;};
         }
 
@@ -290,6 +288,7 @@ void DrawWidget:: mouseMoveEvent(QMouseEvent*event){
         if(m_isdraw){
             drawingPath1.lineTo(event->pos());
         }
+
     }
     update();
 
