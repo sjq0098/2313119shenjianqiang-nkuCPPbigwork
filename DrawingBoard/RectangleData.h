@@ -4,26 +4,9 @@
 #include<shapedata.h>
 class RectangleData:public ShapeData{
 public:
-    /*
-     * 接口说明：公共接口，无参构造函数
-     * 参数说明：无
-     * 返回值说明：无
-     */
+
     RectangleData();
-    /*
-     * 接口说明：公共接口，有参构造函数
-     * 参数说明： [in]   dPosX起点横坐标
-     *          [in]    dPosY起点纵坐标
-     *          [in]    dWidth宽度
-     *          [in]    dHeight高度
-     * 返回值说明：无
-     */
     RectangleData(const double& dPosX,const double&dPosY,const double &dWidth,const double &dHeight);
-    /*
-     * 接口说明：公共接口，析构函数
-     * 参数说明：无
-     * 返回值说明：无
-     */
     ~RectangleData();
     //设置矩形参数
     inline void SetStartPosX(const double &dPosX){m_dStartPosX=dPosX;};
@@ -43,7 +26,6 @@ private:
     double m_dStartPosY;
     double m_dWidth;
     double m_dHeight;
-    //边框颜色和填充颜色设置将在2.0版本写出
 
 };
 

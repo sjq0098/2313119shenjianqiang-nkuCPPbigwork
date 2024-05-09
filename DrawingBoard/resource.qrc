@@ -40,5 +40,8 @@
         <file>recourse/cool-background.png</file>
         <file>recourse/bg_bggenerator_com.png</file>
         <file>recourse/icon/notebook.png</file>
+        <file>recourse/icon/Arrow.png</file>
+        <file>recourse/icon/Diamond.png</file>
+        <file>recourse/icon/Arc.png</file>
     </qresource>
 </RCC>

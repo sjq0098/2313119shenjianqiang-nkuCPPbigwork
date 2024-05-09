@@ -5,7 +5,7 @@
 DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setWindowTitle(QStringLiteral("qtnote4.0"));
+    setWindowTitle(QStringLiteral("qtnote6.0-DrawBoard"));
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note1.png")));
     this->setGeometry(0,0,1920,1080);
     this->notepage=new notepad;//实例化note窗口
@@ -68,6 +68,27 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     m_Pencil.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
     m_Pencil.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
+    m_Eraser.setParent(this);
+    m_Eraser.setText(QString("橡皮擦"));
+    m_Eraser.setIcon(QIcon(QString(":/icon/recourse/icon/eraser.png")));
+    m_Eraser.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_Eraser.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+
+    m_ArcButton.setParent(this);
+    m_ArcButton.setText(QString("弧线"));
+    m_ArcButton.setIcon(QIcon(QString(":/icon/recourse/icon/Arc.png")));
+    m_ArcButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_ArcButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+
+
+    m_DiamondButton.setParent(this);
+    m_DiamondButton.setText(QString("菱形"));
+    m_DiamondButton.setIcon(QIcon(QString(":/icon/recourse/icon/Diamond.png")));
+    m_DiamondButton.setIconSize(QSize(ICON_SIZE,ICON_SIZE));
+    m_DiamondButton.setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
     m_exitButton.setParent(this);
     m_exitButton.setText(QString("退出"));
     m_exitButton.setIcon(QIcon(QString(":/icon/recourse/icon/exit.png")));
@@ -83,7 +104,11 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     QObject::connect(&m_rotateLeftButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateLeftButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_rotateRightButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_rotateRightButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_Pencil, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_Pencil_Clicked, Qt::DirectConnection);
+    QObject::connect(&m_ArcButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_ArcButton_Clicked, Qt::DirectConnection);
+    QObject::connect(&m_Eraser, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_Eraser_Clicked, Qt::DirectConnection);
     QObject::connect(&m_exitButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked, Qt::DirectConnection);
+    QObject::connect(&m_DiamondButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_DiamondButton_Clicked, Qt::DirectConnection);
+
     connect(this->notepage,&notepad::back,this,[=](){this->notepage->hide(); this->show();});
 }
 
@@ -94,18 +119,20 @@ DrawingboardWidget::~DrawingboardWidget()
 }
 void DrawingboardWidget::resizeEvent(QResizeEvent *event)
 {
-    m_Pencil.setGeometry(0,0,ICON_SIZE,ICON_SIZE);
-    m_RectangleButton.setGeometry(0,ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_EllipseButton.setGeometry(0,2*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_trangleButton.setGeometry(0,3*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_lineButton.setGeometry(0,4*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_TextButton.setGeometry(0,5*ICON_SIZE,ICON_SIZE,ICON_SIZE);
+    m_Pencil.setGeometry(0,0,BUTTON_SIZE,BUTTON_SIZE);
+     m_Eraser.setGeometry(0,BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_RectangleButton.setGeometry(0,2*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_EllipseButton.setGeometry(0,3*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_trangleButton.setGeometry(0,4*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_lineButton.setGeometry(0,5*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_TextButton.setGeometry(0,6*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_ArcButton .setGeometry(0,7*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_DiamondButton.setGeometry(0,8*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_rotateLeftButton.setGeometry(0,9*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_rotateRightButton.setGeometry(0,10*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
+    m_exitButton.setGeometry(0,11*BUTTON_SIZE,BUTTON_SIZE,BUTTON_SIZE);
 
-    m_rotateLeftButton.setGeometry(0,6*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_rotateRightButton.setGeometry(0,7*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-    m_exitButton.setGeometry(0,8*ICON_SIZE,ICON_SIZE,ICON_SIZE);
-
-    m_DrawWidget.setGeometry(ICON_SIZE,5,width()-ICON_SIZE-5,height()-5);
+    m_DrawWidget.setGeometry(BUTTON_SIZE,5,width()-BUTTON_SIZE-5,height()-5);
     QWidget::resizeEvent(event);
 }
 
@@ -113,51 +140,76 @@ void DrawingboardWidget::resizeEvent(QResizeEvent *event)
 int DrawingboardWidget::fn_Recv_RectangleButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Rectangle);
     m_DrawWidget.m_isdraw=0;
-
+m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_EllipseButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Ellipse);
     m_DrawWidget.m_isdraw=0;
-
+m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_trangleButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Triangle);
     m_DrawWidget.m_isdraw=0;
-
+m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_lineButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Line);
     m_DrawWidget.m_isdraw=0;
-
+    m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_TextButton_Clicked(){
     m_DrawWidget.SetShapeType(ShapeType::Shape_Text);
     m_DrawWidget.m_isdraw=0;
-
+    m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 
 }
 int DrawingboardWidget::fn_Recv_rotateLeftButton_Clicked(){
     m_DrawWidget.RotateLeft();
     m_DrawWidget.m_isdraw=0;
-
+    m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 
 }
 int DrawingboardWidget::fn_Recv_rotateRightButton_Clicked(){
     m_DrawWidget.RotateRight();
     m_DrawWidget.m_isdraw=0;
-
+    m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 int DrawingboardWidget::fn_Recv_Pencil_Clicked(){
   m_DrawWidget.SetShapeType(ShapeType::Shape_Pencil);
   m_DrawWidget.m_isdraw=1;
+m_DrawWidget.m_iseraser=0;
+  return NORMAL_RETURN;
+}
 
+int DrawingboardWidget::fn_Recv_Eraser_Clicked()
+{
+    m_DrawWidget.SetShapeType(ShapeType::Shape_Eraser);
+    m_DrawWidget.m_isdraw=0;
+    m_DrawWidget.m_iseraser=1;
+    return NORMAL_RETURN;
+
+}
+
+int DrawingboardWidget::fn_Recv_ArcButton_Clicked()
+{
+    m_DrawWidget.SetShapeType(ShapeType::Shape_Arc);
+    m_DrawWidget.m_isdraw=0;
+    m_DrawWidget.m_iseraser=0;
+    return NORMAL_RETURN;
+}
+
+int DrawingboardWidget::fn_Recv_DiamondButton_Clicked()
+{
+    m_DrawWidget.SetShapeType(ShapeType::Shape_Diamond);
+    m_DrawWidget.m_isdraw=0;
+    m_DrawWidget.m_iseraser=0;
     return NORMAL_RETURN;
 }
 

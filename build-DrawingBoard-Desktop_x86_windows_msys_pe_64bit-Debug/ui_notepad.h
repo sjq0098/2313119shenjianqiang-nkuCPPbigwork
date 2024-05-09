@@ -219,7 +219,7 @@ public:
 
     void retranslateUi(QMainWindow *notepad)
     {
-        notepad->setWindowTitle(QCoreApplication::translate("notepad", "qtnote4.0-notepad", nullptr));
+        notepad->setWindowTitle(QCoreApplication::translate("notepad", "qtnote6.0-notepad", nullptr));
         action_newfile->setText(QCoreApplication::translate("notepad", "\346\226\260\345\273\272\346\226\207\344\273\266", nullptr));
 #if QT_CONFIG(shortcut)
         action_newfile->setShortcut(QCoreApplication::translate("notepad", "Ctrl+N", nullptr));

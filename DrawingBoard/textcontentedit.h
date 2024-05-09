@@ -17,10 +17,6 @@ public:
     void focusOutEvent(QFocusEvent *event) override;
 
 
-
-    //void contextMenuEvent(QContextMenuEvent *event) override;
-
-
 private:
 
 signals:

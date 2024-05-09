@@ -3,7 +3,10 @@ release/DrawingBoard.o
 release/RectangleData.o
 release/ShapeData.o
 release/TriangleData.o
+release/arcdata.o
+release/diamonddata.o
 release/ellipsedata.o
+release/eraserdata.o
 release/form_start.o
 release/linedata.o
 release/main.o

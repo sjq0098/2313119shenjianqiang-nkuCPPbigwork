@@ -3,7 +3,10 @@ debug/DrawingBoard.o
 debug/RectangleData.o
 debug/ShapeData.o
 debug/TriangleData.o
+debug/arcdata.o
+debug/diamonddata.o
 debug/ellipsedata.o
+debug/eraserdata.o
 debug/form_start.o
 debug/linedata.o
 debug/main.o

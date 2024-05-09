@@ -20,7 +20,10 @@ SOURCES += \
     RectangleData.cpp \
     ShapeData.cpp \
     TriangleData.cpp \
+    arcdata.cpp \
+    diamonddata.cpp \
     ellipsedata.cpp \
+    eraserdata.cpp \
     form_start.cpp \
     linedata.cpp \
     main.cpp \
@@ -35,7 +38,10 @@ HEADERS += \
     DrawingBoard.h \
     RectangleData.h \
     TriangleData.h \
+    arcdata.h \
+    diamonddata.h \
     ellipsedata.h \
+    eraserdata.h \
     form_start.h \
     linedata.h \
     notepad.h \

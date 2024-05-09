@@ -22,10 +22,3 @@ void TextcontentEdit::focusOutEvent(QFocusEvent*event) {
 };
 
 
-
-
-
-/*void contextMenuEvent(QContextMenuEvent *event) {
- * return;
- * }
-*/

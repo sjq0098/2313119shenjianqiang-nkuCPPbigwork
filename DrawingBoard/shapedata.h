@@ -10,7 +10,10 @@ enum class ShapeType
     Shape_Triangle=3,//三角形
     Shape_Line=4,//直线
     Shape_Text=5,//文本
-    Shape_Pencil=6,
+    Shape_Pencil=6,//铅笔
+    Shape_Eraser=7,//橡皮擦
+    Shape_Arc=8,//弧
+    Shape_Diamond=9,//菱形
 };
 
 

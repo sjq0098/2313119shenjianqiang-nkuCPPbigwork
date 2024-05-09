@@ -12,9 +12,6 @@ public:
      ~PencilData();
 private:
     QPainterPath m_drawpath;
-
-
-
 };
 
 #endif // PENCILDATA_H

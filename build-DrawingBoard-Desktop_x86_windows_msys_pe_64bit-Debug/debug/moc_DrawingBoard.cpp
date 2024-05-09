@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_DrawingboardWidget_t {
-    QByteArrayData data[12];
-    char stringdata0[296];
+    QByteArrayData data[15];
+    char stringdata0[375];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,7 +43,10 @@ QT_MOC_LITERAL(7, 144, 26), // "fn_Recv_TextButton_Clicked"
 QT_MOC_LITERAL(8, 171, 32), // "fn_Recv_rotateLeftButton_Clicked"
 QT_MOC_LITERAL(9, 204, 33), // "fn_Recv_rotateRightButton_Cli..."
 QT_MOC_LITERAL(10, 238, 22), // "fn_Recv_Pencil_Clicked"
-QT_MOC_LITERAL(11, 261, 34) // "fn_Recv_SwitchToNoteButton_Cl..."
+QT_MOC_LITERAL(11, 261, 22), // "fn_Recv_Eraser_Clicked"
+QT_MOC_LITERAL(12, 284, 25), // "fn_Recv_ArcButton_Clicked"
+QT_MOC_LITERAL(13, 310, 29), // "fn_Recv_DiamondButton_Clicked"
+QT_MOC_LITERAL(14, 340, 34) // "fn_Recv_SwitchToNoteButton_Cl..."
 
     },
     "DrawingboardWidget\0back\0\0"
@@ -54,7 +57,9 @@ QT_MOC_LITERAL(11, 261, 34) // "fn_Recv_SwitchToNoteButton_Cl..."
     "fn_Recv_TextButton_Clicked\0"
     "fn_Recv_rotateLeftButton_Clicked\0"
     "fn_Recv_rotateRightButton_Clicked\0"
-    "fn_Recv_Pencil_Clicked\0"
+    "fn_Recv_Pencil_Clicked\0fn_Recv_Eraser_Clicked\0"
+    "fn_Recv_ArcButton_Clicked\0"
+    "fn_Recv_DiamondButton_Clicked\0"
     "fn_Recv_SwitchToNoteButton_Clicked"
 };
 #undef QT_MOC_LITERAL
@@ -65,7 +70,7 @@ static const uint qt_meta_data_DrawingboardWidget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,23 +78,29 @@ static const uint qt_meta_data_DrawingboardWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x06 /* Public */,
+       1,    0,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   65,    2, 0x09 /* Protected */,
-       4,    0,   66,    2, 0x09 /* Protected */,
-       5,    0,   67,    2, 0x09 /* Protected */,
-       6,    0,   68,    2, 0x09 /* Protected */,
-       7,    0,   69,    2, 0x09 /* Protected */,
-       8,    0,   70,    2, 0x09 /* Protected */,
-       9,    0,   71,    2, 0x09 /* Protected */,
-      10,    0,   72,    2, 0x09 /* Protected */,
-      11,    0,   73,    2, 0x09 /* Protected */,
+       3,    0,   80,    2, 0x09 /* Protected */,
+       4,    0,   81,    2, 0x09 /* Protected */,
+       5,    0,   82,    2, 0x09 /* Protected */,
+       6,    0,   83,    2, 0x09 /* Protected */,
+       7,    0,   84,    2, 0x09 /* Protected */,
+       8,    0,   85,    2, 0x09 /* Protected */,
+       9,    0,   86,    2, 0x09 /* Protected */,
+      10,    0,   87,    2, 0x09 /* Protected */,
+      11,    0,   88,    2, 0x09 /* Protected */,
+      12,    0,   89,    2, 0x09 /* Protected */,
+      13,    0,   90,    2, 0x09 /* Protected */,
+      14,    0,   91,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Int,
+    QMetaType::Int,
+    QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
@@ -126,7 +137,13 @@ void DrawingboardWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 8: { int _r = _t->fn_Recv_Pencil_Clicked();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 9: { int _r = _t->fn_Recv_SwitchToNoteButton_Clicked();
+        case 9: { int _r = _t->fn_Recv_Eraser_Clicked();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 10: { int _r = _t->fn_Recv_ArcButton_Clicked();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 11: { int _r = _t->fn_Recv_DiamondButton_Clicked();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 12: { int _r = _t->fn_Recv_SwitchToNoteButton_Clicked();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -171,13 +188,13 @@ int DrawingboardWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 13;
     }
     return _id;
 }

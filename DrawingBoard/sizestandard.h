@@ -1,8 +1,8 @@
 #ifndef SIZESTANDARD_H
 #define SIZESTANDARD_H
 
-#define ICON_SIZE 96//正常图标尺寸
-#define BUTTON_SIZE 96//按钮尺寸
+#define ICON_SIZE 64//正常图标尺寸
+#define BUTTON_SIZE 90//按钮尺寸
 
 
 

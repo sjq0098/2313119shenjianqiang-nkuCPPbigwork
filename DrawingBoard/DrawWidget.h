@@ -12,10 +12,9 @@
 #include"linedata.h"
 #include"textdata.h"
 #include"pencildata.h"
-
-
-
-
+#include"eraserdata.h"
+#include"arcdata.h"
+#include"diamonddata.h"
 
 #include"QPainter"
 #include"QMenu"
@@ -57,6 +56,7 @@ public:
      QToolButton m_keepButton;
 
     bool m_isdraw;
+    bool m_iseraser;
 protected:
     int fn_Recv_ContentEdit_GetContent(const QString &qstrContent);
     int SavePic();//保存图片
@@ -83,14 +83,10 @@ private:
     QFont m_TextFont;//文字字体
     TextcontentEdit m_ContentEdit;//文本编辑
 
-
-
     int _openflag;//打开图片
     QPixmap _pixmap;//画布图片
     QPainterPath drawingPath1;
     QPainterPath drawingPath2;
-
-
 
 };
 
