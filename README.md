@@ -1,4 +1,7 @@
-# 2313119shenjianqiang-nkuCPPbigwork请在master分支的Drawboard文件夹中查看对应代码和提交记录
+# 2313119shenjianqiang-nkuCPPbigwork请在master分支的Drawingboard文件夹中查看对应代码和提交记录
+<br/>
+<br/>
+# 不是DrawBoard笨人不小心传了一个空项目的文件夹（悲）
 <br/>
 <br/>
 如你所见，南开大学24C++大作业 学号：2313119，姓名：申健强，做了一个仿制的note软件，用于简单画图和文字处理 <br/>
