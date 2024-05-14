@@ -62,22 +62,24 @@ private slots:
     void on_action_history_clear_triggered();
 
     void showcustomContextMenu(const QPoint &pos);
+
     void onDoubleClicked(const QModelIndex &index);
 
 private:
-    Ui::notepad *ui;
 
-    QString m_FileName;    
-    bool isSaved=false;
-
+    void updateSaveState();
     void initMenu();
     void initFont();
     void initTree();
     void open_recent_file();
     void saveHistory(QString path);
     QList<QString> GetHistory();
-    void updateSaveState();
+
     MyFileSystemModel *m_FileSystemModel;
+    Ui::notepad *ui;
+
+    QString m_FileName;
+    bool isSaved=false;
 protected:
     void closeEvent(QCloseEvent*event);
 };

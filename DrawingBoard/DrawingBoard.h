@@ -19,7 +19,7 @@ class DrawingboardWidget : public QWidget
 public:
     DrawingboardWidget(QWidget *parent = nullptr);
     ~DrawingboardWidget();
-    notepad *notepage=NULL;//用来保存notepad页面的实例化对象的地址
+
 
     void resizeEvent(QResizeEvent *event) override;
 

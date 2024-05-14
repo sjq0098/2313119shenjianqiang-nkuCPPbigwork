@@ -5,11 +5,9 @@
 DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     : QWidget(parent)
 {
-    setWindowTitle(QStringLiteral("qtnote6.0-DrawBoard"));
+    setWindowTitle(QStringLiteral("qtnote8.0-DrawBoard"));
     setWindowIcon(QIcon(QString(":/icon/recourse/icon/note1.png")));
     this->setGeometry(0,0,1920,1080);
-    this->notepage=new notepad;//实例化note窗口
-
     m_RectangleButton.setParent(this);
     m_EllipseButton.setParent(this);
     m_trangleButton.setParent(this);
@@ -109,7 +107,6 @@ DrawingboardWidget::DrawingboardWidget(QWidget *parent)
     QObject::connect(&m_exitButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_SwitchToNoteButton_Clicked, Qt::DirectConnection);
     QObject::connect(&m_DiamondButton, &QToolButton::clicked, this, &DrawingboardWidget::fn_Recv_DiamondButton_Clicked, Qt::DirectConnection);
 
-    connect(this->notepage,&notepad::back,this,[=](){this->notepage->hide(); this->show();});
 }
 
 

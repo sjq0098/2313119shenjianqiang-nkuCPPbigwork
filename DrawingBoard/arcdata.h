@@ -8,8 +8,6 @@ class ArcData:public ShapeData
 public:
     ArcData();
     ArcData(const double &dStartPosX,const double &dStartPosY,const double &dRadiusW,const double &dRadiusH);
-
-
     ~ArcData();
     inline void SetStartPosX(const double &dStartPosX){m_dStartPosX=dStartPosX  ; };
     inline void SetStartPosY(const double &dStartPosY){m_dStartPosX=dStartPosY  ; };

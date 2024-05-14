@@ -58,7 +58,7 @@ void DrawWidget::paintEvent(QPaintEvent *event){
     painter.setPen(m_BlackPen);
     painter.setFont(m_TextFont);
     painter.setBrush(m_NullBrush);
-    painter.setRenderHint(QPainter::Antialiasing,true);
+   // painter.setRenderHint(QPainter::Antialiasing,true);
     switch (m_RotateType) {
     case(Rotatetype::Rotate_90):{
         painter.translate(width(),0);

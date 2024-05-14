@@ -64,12 +64,11 @@ protected:
 
 private:
     SystemData*m_pSystemData;
-
-
+    ShapeType m_Shapetype;//当前绘画的图形的类型
     Rotatetype m_RotateType;//观测旋转类型
 
     bool m_bLBtnClicked;//鼠标左键是否按下
-    ShapeType m_Shapetype;//当前绘画的图形的类型
+
 
 
     QPoint m_ClickedPoint;//鼠标点击的坐标

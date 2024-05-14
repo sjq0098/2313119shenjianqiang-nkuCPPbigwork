@@ -328,7 +328,39 @@ void notepad::showcustomContextMenu(const QPoint &pos)
                }
             }
         });
-        menu.addAction("打开文件");
+        menu.addAction("打开文件",[=](){
+            if(!m_FileSystemModel->isDir(index)){
+                QString filename = m_FileSystemModel->fileName(index);
+                QString filepath =m_FileSystemModel->filePath(index);
+                qDebug()<<filename;
+                if (!filename.isEmpty()) {
+                    // 检查文件后缀
+                    QFileInfo fileInfo(filename);
+                    QString suffix = fileInfo.suffix().toLower(); // 转换为小写以进行不区分大小写的比较
+                    if (suffix != "txt" && suffix != "cpp" && suffix != "h") {
+                        // 文件后缀不符合要求，显示错误消息
+                        QMessageBox::warning(this, "错误", "选择的文件不是可读文件类型！");
+                        return; // 退出函数
+                    }
+                    else {
+                        QFile file(filepath);
+                        if(!file.open(QIODevice::ReadOnly )){
+                            // 如果文件无法打开，显示错误消息
+                            QMessageBox::warning(this, "警告", "无法打开或无法修改本文件：" + file.errorString());
+                            return; // 退出函数
+                        }
+                        m_FileName = filename;
+                        setWindowTitle(m_FileName + " - open with qtnote8.0");
+                        QTextStream in(&file);
+                        in.setCodec("UTF-8");
+                        QString Current_text = in.readAll();
+                        ui->textEdit->setText(Current_text);
+                        file.close();
+                        saveHistory(m_FileName);
+                    }
+                }
+            }
+        });
     }
 
 

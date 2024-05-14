@@ -23,8 +23,6 @@ public:
 private:
     Ui::form_start *ui;
 
-
-
 private slots:
     void on_pb1_clicked();
     void on_pb2_clicked();
