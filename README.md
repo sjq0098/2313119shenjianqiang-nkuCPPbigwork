@@ -1,4 +1,4 @@
-# 2313119shenjianqiang-nkuCPPbigwork请在master分支的Drawingboard文件夹中查看对应代码和提交记录
+# 2313119shenjianqiang-nkuCPPbigwork请在master分支的Drawingboard文件夹中查看对应代码和提交记录，以及请看看readme
 <br/>
 <br/>
 
